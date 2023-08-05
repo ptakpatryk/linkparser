@@ -23,6 +23,6 @@ func main() {
 
   defer f.Close()
 
-	parser.ParseLink()
-
+  links := parser.ParseHtmlLinks(f)
+  fmt.Printf("%+v\n", links)
 }
