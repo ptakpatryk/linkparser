@@ -20,14 +20,8 @@ func ParseHtmlLinks(r io.Reader) []Link {
 
 	var f func(*html.Node)
 	f = func(n *html.Node) {
-		if n.Type == html.ElementNode && n.Data == "a" {
-			text := n.FirstChild.Data
-			for _, a := range n.Attr {
-				if a.Key == "href" {
-					links = append(links, Link{Href: a.Val, Text: text})
-					break
-				}
-			}
+		if isLink(n) {
+			links = append(links, parseLink(n))
 		}
 		for c := n.FirstChild; c != nil; c = c.NextSibling {
 			f(c)
@@ -38,6 +32,17 @@ func ParseHtmlLinks(r io.Reader) []Link {
 	return links
 }
 
-func isLink(tag []byte) bool {
-	return len(tag) == 1 && tag[0] == 'a'
+func isLink(n *html.Node) bool {
+	return n.Type == html.ElementNode && n.Data == "a"
+}
+
+func parseLink(ln *html.Node) (linkItem Link) {
+	text := ln.FirstChild.Data
+	for _, a := range ln.Attr {
+		if a.Key == "href" {
+			linkItem = Link{Href: a.Val, Text: text}
+		}
+	}
+
+	return linkItem
 }
