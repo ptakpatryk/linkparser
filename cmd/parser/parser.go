@@ -1,7 +1,10 @@
 package parser
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func ParseLink() {
 	fmt.Println("Link has been parsed")
 }
+
