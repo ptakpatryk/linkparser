@@ -16,7 +16,7 @@ func checkError(err error) {
 }
 
 func main() {
-	htmlFilePath := flag.String("html", "assets/ex1.html", "path to the html file you want to parse")
+	htmlFilePath := flag.String("html", "tmp/ex1.html", "path to the html file you want to parse")
   flag.Parse()
   f, err := os.Open(*htmlFilePath)
   checkError(err)
